@@ -4,10 +4,22 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "vinoth kumar",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinothkumar-m18/NodeLearningProject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vinothkumar-m18/NodeLearningProject/issues"
+  },
+  "homepage": "https://github.com/vinothkumar-m18/NodeLearningProject#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
