@@ -1,20 +1,39 @@
 import {createServer} from 'http'
-const logger1 = (req, res, next) =>{
-    console.log(`${req.url} ${req.method}`)
-    console.log("logger middleware 1 - executed")
-    next()
+const users = [
+    {
+        id : 1,
+        name : "vinoth"
+    }, 
+    {
+        id : 2,
+        name : "mani"
+    }
+]
+const getRequestHandler = (req, res)=>{
+        res.setHeader('Content-Type', 'application/json')
+        res.write(JSON.stringify(users))
+        res.end()    
 }
-const logger2 = (req, res, next)=>{
-    console.log(`${req.method} ${req.url}`)
-    console.log("logger middleware 2 - executed")
-    next()
+const postRequestHandler = (req, res)=>{
+    let body = '';
+    req.on('data', (chunk)=>{
+        body += chunk.toString();
+    })
+    req.on('end', ()=>{
+        const newUser = JSON.parse(body);
+        users.push(newUser);
+        res.statusCode = 201;
+        res.write(JSON.stringify(newUser))
+        res.end()
+    })
 }
 const server = createServer((req, res)=>{
-    logger1(req, res, ()=>{
-        logger2(req, res, ()=>{
-            res.end("response")
-        })
-    })
+    if(req.method === 'GET' && req.url === '/api/users'){
+        getRequestHandler(req, res);
+    }
+    else if(req.method === 'POST' && req.url === '/api/users'){
+        postRequestHandler(req, res);
+    }
 })
 server.listen(8000, ()=>{
     console.log("server is running at port 8000")
