@@ -3,18 +3,18 @@ const users = [
     {
         id : 1,
         name : "vinoth"
-    }, 
+    },
     {
         id : 2,
-        name : "mani"
+        name : "ram"
     }
 ]
-const getRequestHandler = (req, res)=>{
-        res.setHeader('Content-Type', 'application/json')
-        res.write(JSON.stringify(users))
-        res.end()    
+const getReqHandler = (req, res, data)=>{
+    res.setHeader('Content-Type', 'application/json')
+    res.write(JSON.stringify(data));
+    res.end();
 }
-const postRequestHandler = (req, res)=>{
+const postReqHandler = (req, res)=>{
     let body = '';
     req.on('data', (chunk)=>{
         body += chunk.toString();
@@ -22,19 +22,18 @@ const postRequestHandler = (req, res)=>{
     req.on('end', ()=>{
         const newUser = JSON.parse(body);
         users.push(newUser);
-        res.statusCode = 201;
-        res.write(JSON.stringify(newUser))
-        res.end()
+        res.setHeader('Content-Type', 'application/json');
+        res.write(JSON.stringify(users));
+        res.end();
     })
 }
 const server = createServer((req, res)=>{
     if(req.method === 'GET' && req.url === '/api/users'){
-        getRequestHandler(req, res);
-    }
-    else if(req.method === 'POST' && req.url === '/api/users'){
-        postRequestHandler(req, res);
+        getReqHandler(req, res, users);
+    }else if(req.method === 'POST' && req.url === '/api/users'){
+        postReqHandler(req, res);
     }
 })
 server.listen(8000, ()=>{
-    console.log("server is running at port 8000")
+    console.log("server is listening at port 8000");
 })
