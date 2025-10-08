@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node server",
-    "dev":"node --watch --env-file=.env server"
+    "dev": "node --watch --env-file=.env server"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/vinothkumar-m18/NodeLearningProject#readme",
   "dependencies": {
+    "colors": "^1.4.0",
     "express": "^5.1.0"
   }
 }
